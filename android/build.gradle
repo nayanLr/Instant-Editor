@@ -1,0 +1,51 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        ext.kotlin_version = '1.7.10'
+        buildToolsVersion = "33.0.0"
+        minSdkVersion = 23
+        compileSdkVersion = 33
+        targetSdkVersion = 33
+
+        // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
+        ndkVersion = "23.1.7779620"
+    }
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        // Banuba VE SDK and AR Cloud repositories
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Banuba/banuba-ve-sdk")
+            credentials {
+                username = "Banuba"
+                password = ""
+            }
+        }
+        maven {
+            name = "ARCloudPackages"
+            url = uri("https://github.com/Banuba/banuba-ar")
+            credentials {
+                username = "Banuba"
+                password = ""
+            }
+        }
+
+        google()
+        jcenter()
+        maven { url 'https://www.jitpack.io' }
+    }
+}
